@@ -7,6 +7,7 @@ module Spree
             email: self.email, 
             ship_address: self.ship_address,
             magazine: line_item.variant.product,
+            quantity: line_item.quantity,
             remaining_issues: line_item.variant.issues_number
           )
         end

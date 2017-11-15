@@ -1,12 +1,16 @@
 class Spree::Subscription < ActiveRecord::Base
   belongs_to :magazine, class_name: 'Spree::Product'
   belongs_to :ship_address, class_name: 'Spree::Address'
+  belongs_to :user
+
   has_many :shipped_issues
   has_many :issues, through: :shipped_issues
 
   alias_method :shipping_address, :ship_address
   alias_method :shipping_address=, :ship_address=
   accepts_nested_attributes_for :ship_address
+
+  acts_as_paranoid
 
   validates_with SubscriptionValidator
 

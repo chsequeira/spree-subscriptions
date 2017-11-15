@@ -5,6 +5,8 @@ class Spree::Issue < ActiveRecord::Base
 
   delegate :subscriptions, to: :magazine
 
+  acts_as_paranoid
+
   validates :name,
             presence: true,
             unless: "magazine_issue.present?"

@@ -2,11 +2,48 @@
   <%= Spree.t(:listing_subscriptions) %>
 <% end %>
 
-<table class="index" id="listing_subscriptions">
+<% content_for :table_filter do %>
+  <div data-hook="admin_subscriptions_sidebar">
+
+    <%= search_form_for [:admin, @search] do |f| %>
+      <%- locals = {:f => f} %>
+      <div data-hook="admin_subscriptions_index_search" class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :email, Spree.t(:email) %>
+            <%= f.text_field :email, :size => 15, class: "form-control js-quick-search-target" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :ship_address_firstname_start, Spree.t(:first_name_begins_with) %>
+            <%= f.text_field :ship_address_firstname_start, :size => 15, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :ship_address_lastname_start, Spree.t(:last_name_begins_with) %>
+            <%= f.text_field :ship_address_lastname_start, :size => 15, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      <div data-hook="admin_products_index_search_buttons" class="form-actions">
+        <%= button Spree.t(:search), 'search' %>
+      </div>
+    <% end %>
+
+  </div>
+<% end %>
+
+<%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @subscriptions } %>
+
+<table class="table" id="listing_subscriptions">
   <thead>
-    <tr>
+    <tr data-hook="admin_subscriptions_index_headers">
       <th><%= sort_link @search, :created_at, Spree.t(:created_at, scope: 'activerecord.attributes.spree/subscription') %></th>
       <th><%= sort_link @search, :id, Spree.t(:id, scope: 'activerecord.attributes.spree/subscription') %></th>
+      <th><%= sort_link @search, :subscription, Spree.t(:subscription, scope: 'activerecord.attributes.spree/subscription') %></th>
+      <th><%= sort_link @search, :quantity, Spree.t(:quantity, scope: 'activerecord.attributes.spree/subscription') %></th>
       <th><%= sort_link @search, :remaining_issues, Spree.t(:remaining_issues, scope: 'activerecord.attributes.spree/subscription') %></th>
       <th><%= sort_link @search, :state, Spree.t(:state, scope: 'activerecord.attributes.spree/subscription') %></th>
       <th><%= sort_link @search, :email, Spree.t(:email, scope: 'activerecord.attributes.spree/subscription') %></th>
@@ -20,6 +57,8 @@
       <tr>
         <td><%= subscription.created_at.to_date %></td>
         <td><%= link_to subscription.id, edit_object_url(subscription) %></td>
+        <td><%= subscription.magazine.name %></td>
+        <td><%= subscription.quantity %></td>
         <td><%= subscription.remaining_issues %></td>
         <td><%= Spree.t(subscription.state, scope: 'subscription_state').downcase %></td>
         <td><%= subscription.email %></td>
@@ -34,32 +73,5 @@
     <% end %>
   </tbody>
 </table>
-<%= paginate @subscriptions %>
 
-
-<% content_for :sidebar_title do %>
-  <%= Spree.t(:search) %>
-<% end %>
-
-<% content_for :sidebar do %>
-  <div class="box" data-hook="admin_subscriptions_index_search">
-    <h3><%= Spree.t(:search) %></h3>
-    <%= search_form_for [:admin, @search] do |f| %>
-      <p>
-        <%= label_tag nil, Spree.t(:email) %><br />
-        <%= f.text_field :email_cont, size: 25 %>
-      </p>
-      <p>
-        <%= label_tag nil, Spree.t(:first_name_begins_with) %><br />
-        <%= f.text_field :ship_address_firstname_start, size: 25 %>
-      </p>
-      <p>
-        <%= label_tag nil, Spree.t(:last_name_begins_with) %><br />
-        <%= f.text_field :ship_address_lastname_start, size: 25 %>
-      </p>
-      <div data-hook="admin_orders_index_search_buttons">
-        <p><%= button Spree.t(:search) %></p>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+<%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @subscriptions } %>

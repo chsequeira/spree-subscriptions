@@ -1,14 +1,12 @@
 <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Issues' } %>
 
 <% content_for :page_actions do %>
-  <li id="new_issue_link">
-    <%= button_link_to Spree.t(:new_issue), new_admin_magazine_issue_url(@magazine), { icon: 'plus', id: 'admin_new_issue' } %>
-  </li>
+  <%= button_link_to( Spree.t(:new_issue), new_admin_magazine_issue_url(@magazine), { class: "btn-success", icon: 'add', id: 'new_image_link' }) if can? :create, Spree::Issue %>
 <% end if can?(:create, Spree::Issue) %>
 
 <h1><%= Spree.t(:listing_issues) %></h1>
 
-<table class="index" id="listing_issues">
+<table class="table sortable" data-hook="issues_table">
   <thead>
     <tr>
       <th data-hook="admin_issues_index_header_name"><%= Spree.t(:name, scope: 'activerecord.attributes.spree/issue') %></th>
@@ -21,11 +19,11 @@
       <tr>
         <td data-hook="admin_issues_index_row_name"><%= link_to issue.name, admin_magazine_issue_url(@magazine, issue) %></td>
         <td data-hook="admin_issues_index_row_shipped_at"><%= issue.shipped? ? issue.shipped_at.to_s(:db) : Spree.t(:issue_not_shipped) %></td>
-        <td class="actions" data-hook="admin_issues_index_row_actions">
+        <td class="actions actions-2 text-right" data-hook="admin_issues_index_row_actions">
           <%= link_to_with_icon :truck, Spree.t(:ship), admin_magazine_issue_ship_path(@magazine, issue), {no_text: true, confirm: Spree.t(:confirm_ship)} if !issue.shipped? %>
           <%= link_to_with_icon :history, Spree.t(:unship), admin_magazine_issue_unship_path(@magazine, issue), {no_text: true, confirm: Spree.t(:confirm_unship)} if issue == @issues.shipped.order('shipped_at DESC').first %>
-          <%= link_to_with_icon :edit,  Spree.t(:edit), edit_admin_magazine_issue_url(@magazine, issue), no_text: true, class: 'edit' if !issue.shipped? %>
-          <%= link_to_with_icon :trash,  Spree.t(:delete), admin_magazine_issue_url(@magazine, issue), method: :delete, no_text: true if !issue.shipped? %>
+          <%= link_to_with_icon :edit,  Spree.t(:edit), edit_admin_magazine_issue_url(@magazine, issue), no_text: true, class: 'btn btn-primary btn-sm' if !issue.shipped? %>
+          <%= link_to_delete( issue, { url: admin_magazine_issue_url(@magazine, issue), no_text: true }) if !issue.shipped? && can?( :destroy, issue) %>
         </td>
       </tr>
     <% end %>

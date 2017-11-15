@@ -7,6 +7,7 @@ class CreateSpreeIssues < ActiveRecord::Migration
       t.date :published_at
 
       t.timestamps
+      t.datetime :deleted_at
     end
     add_index :spree_issues, :magazine_id
     add_index :spree_issues, :magazine_issue_id

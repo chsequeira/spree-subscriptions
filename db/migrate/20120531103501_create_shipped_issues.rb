@@ -5,6 +5,7 @@ class CreateShippedIssues < ActiveRecord::Migration
       t.references :subscription
 
       t.timestamps
+      t.datetime :deleted_at
     end
     add_index :spree_shipped_issues, :issue_id
     add_index :spree_shipped_issues, :subscription_id

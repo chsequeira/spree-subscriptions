@@ -7,6 +7,7 @@ class CreateSpreeSubscriptions < ActiveRecord::Migration
       t.string :state
       t.integer :remaining_issues
       t.timestamps
+      t.datetime :deleted_at
     end
   end
 end

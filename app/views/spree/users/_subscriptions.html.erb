@@ -1,10 +1,11 @@
 <div data-hook="account_my_subscriptions">
   <h3><%= Spree.t(:my_subscriptions) %></h3>
   <% if @subscriptions.present? %>
-    <table class="subscription-summary">
+    <table class="table table-striped subscription-summary">
       <thead>
         <tr>
           <th><%= Spree.t(:subscription) %></th>
+          <th><%= Spree.t(:quantity) %></th>
           <th><%= Spree.t(:shipped_to) %></th>
           <th><%= Spree.t(:remaining_issues, scope: 'activerecord.attributes.spree/subscription') %></th>
           <th><%= Spree.t(:status) %></th>
@@ -15,6 +16,7 @@
         <% @subscriptions.each do |subscription| %>
           <tr class="<%= cycle('even', 'odd') %>">
             <td><%= subscription.magazine.name %></td>
+            <td><%= subscription.quantity %></td>
             <td><%= subscription.ship_address.full_name %></td>
             <td><%= subscription.remaining_issues %></td>
             <td><%= Spree.t(subscription.state, scope: 'subscription_state').titleize %></td>
