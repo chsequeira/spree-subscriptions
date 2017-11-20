@@ -24,7 +24,7 @@ class Spree::Subscription < ActiveRecord::Base
   end
 
   def self.subscribe!(opts)
-    opts.to_options!.assert_valid_keys(:email, :ship_address, :magazine, :remaining_issues)
+    opts.to_options!.assert_valid_keys(:email, :ship_address, :magazine, :remaining_issues, :quantity)
 
     existing_subscription = self.where(email: opts[:email], magazine_id: opts[:magazine].id).first
 

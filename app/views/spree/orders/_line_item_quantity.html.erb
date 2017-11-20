@@ -1,4 +1,4 @@
-<% if variant.subscribable? %>
+<% if variant.subscribable? && SUBSCRIPTIONS_QUANTITY_IS_ONE %>
   <%= item_form.object.quantity %>
   <%= item_form.hidden_field :quantity, class: "line_item_quantity" %>
 <% else %>
