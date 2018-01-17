@@ -14,6 +14,9 @@ en:
       active: active
       canceled: canceled
 
+    issue_products:
+      choose_products: Choose Products
+
     confirm_ship: "Ship this issue?"
     confirm_unship: "Unship this issue?"
     creating_issue: "Create issue"
@@ -23,6 +26,7 @@ en:
     editing_subscription: "Edit subscription"
     issue: "issue"
     issue_created: "Issue created!"
+    issue_name_optional: "Issue Name (Optional)"
     issue_not_created: "Issue not created!"
     issue_not_shipped: "Not yet shipped"
     issue_not_updated: "Issue not updated!"
@@ -36,6 +40,8 @@ en:
     new_subscription: New subscription
     listing_issues: Available issues
     listing_subscriptions: Available Subscriptions
+    orders_from: Orders from
+    orders_to: Orders to
     pdf: PDF
     print: print
     ship: Ship

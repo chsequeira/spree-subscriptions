@@ -1,11 +1,32 @@
-<fieldset>
-  <%= f.field_container :name do %>
-    <%= f.label :name, "Issue Name (Optional)" %>
-    <%= f.text_field :name, class: 'fullwidth' %>
-  <% end %>
+<div class="row" id="issue_fields" >
+  <div class="col-md-3">
+    <%= f.field_container :name, class: ['form-group'] do %>
+      <%= f.label :name, t(:issue_name_optional) %>
+      <%= f.error_message_on :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    <% end %>
 
-  <%= f.field_container :magazine_issue_id do %>
-    <%= f.label :magazine_issue_id, Spree.t(:product) %>
-    <%= f.collection_select(:magazine_issue_id, @products, :id, :name, { include_blank: true }, { class: 'select2 fullwidth' }) %>
-  <% end %>
-</fieldset>
+    <%= f.field_container :orders_from, class: ['form-group'] do %>
+      <%= f.label :orders_from, Spree.t(:orders_from) %>
+      <%= f.error_message_on :orders_from %>
+      <%= f.text_field :orders_from, value: datepicker_field_value(@issue.orders_from), class: 'datepicker form-control' %>
+    <% end %>
+
+    <%= f.field_container :orders_to, class: ['form-group'] do %>
+      <%= f.label :orders_to, Spree.t(:orders_to) %>
+      <%= f.error_message_on :orders_to %>
+      <%= f.text_field :orders_to, value: datepicker_field_value(@issue.orders_to), class: 'datepicker form-control' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row" id="issue_products" >
+  <div class="col-md-12">
+    <%= f.field_container :product_ids do %>
+      <div class="form-group issue_products">
+        <%= label_tag "issue_product_ids", Spree.t('issue_products.choose_products') %>
+        <%= hidden_field_tag "issue[product_ids]", (@issue.product_ids || []).join(","), :class => "product_picker" %>
+      </div>
+    <% end %>
+  </div>
+</div>

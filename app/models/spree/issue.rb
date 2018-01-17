@@ -17,6 +17,8 @@ class Spree::Issue < ActiveRecord::Base
   scope :shipped, -> { where("shipped_at IS NOT NULL") }
   scope :unshipped, -> { where("shipped_at IS NULL") }
 
+  attr_accessor :product_ids, :orders_from, :orders_to
+
   def name
     magazine_issue.present? ? magazine_issue.name : read_attribute(:name)
   end
@@ -43,6 +45,14 @@ class Spree::Issue < ActiveRecord::Base
   def magazine_issue
     # override getter method to include deleted products, as per https://github.com/radar/paranoia
     Spree::Product.unscoped { super }
+  end
+
+  def product_ids_string
+    product_ids.join(',')
+  end
+
+  def product_ids_string=(s)
+    self.product_ids = s.to_s.split(',').map(&:strip)
   end
 
 end

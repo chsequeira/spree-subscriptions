@@ -22,6 +22,7 @@
         <td class="actions actions-2 text-right" data-hook="admin_issues_index_row_actions">
           <%= link_to_with_icon :truck, Spree.t(:ship), admin_magazine_issue_ship_path(@magazine, issue), {no_text: true, confirm: Spree.t(:confirm_ship)} if !issue.shipped? %>
           <%= link_to_with_icon :history, Spree.t(:unship), admin_magazine_issue_unship_path(@magazine, issue), {no_text: true, confirm: Spree.t(:confirm_unship)} if issue == @issues.shipped.order('shipped_at DESC').first %>
+          <%= link_to_with_icon :list,  Spree.t(:subscriptions), admin_magazine_issue_url(@magazine, issue), no_text: true, class: 'btn btn-primary btn-sm' %>
           <%= link_to_with_icon :edit,  Spree.t(:edit), edit_admin_magazine_issue_url(@magazine, issue), no_text: true, class: 'btn btn-primary btn-sm' if !issue.shipped? %>
           <%= link_to_delete( issue, { url: admin_magazine_issue_url(@magazine, issue), no_text: true }) if !issue.shipped? && can?( :destroy, issue) %>
         </td>

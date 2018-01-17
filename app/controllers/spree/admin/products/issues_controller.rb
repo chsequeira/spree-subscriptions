@@ -29,7 +29,7 @@ module Spree
         def update
           if @issue.update_attributes(issue_params)
             flash[:notice] = Spree.t('issue_updated')
-            redirect_to admin_magazine_issue_path(@magazine, @issue)
+            redirect_to admin_magazine_issues_url(@magazine)
           else
             flash[:error] = Spree.t(:issue_not_updated)
             render action: :edit
@@ -43,7 +43,7 @@ module Spree
         def create
           if (new_issue = @magazine.issues.create(issue_params))
             flash[:notice] = Spree.t('issue_created')
-            redirect_to admin_magazine_issue_path(@magazine, new_issue)
+            redirect_to admin_magazine_issues_url(@magazine)
           else
             flash[:error] = Spree.t(:issue_not_created)
             render :new
@@ -98,7 +98,7 @@ module Spree
         end
 
         def issue_params
-          params.require(:issue).permit(:name, :published_at, :shipped_at, :magazine, :magazine_issue_id)
+          params.require(:issue).permit(:name, :published_at, :shipped_at, :magazine, :magazine_issue_id, :orders_from, :orders_to, :product_ids_string)
         end
       end
     end
